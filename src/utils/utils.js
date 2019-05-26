@@ -17,6 +17,7 @@ const utils = {
         // Set Buy status tensor
         tensor_frame = { input: [], output: [], proft: [] };
 
+        // TODO use some loop this is ugly AF
         tensor_frame.input = [
           [trade.buy_in[0], trade.buy_in[1], trade.buy_in[2]],
 
