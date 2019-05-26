@@ -19,10 +19,10 @@ async function main() {
     );
 
     await tensorflow.train_modell({
-      model: "lstm_v2",
+      model: "lstm",
       name: "",
       loop: 1,
-      in_shape: 5,
+      in_shape: [5, 3],
       out_shape: 2
     });
 

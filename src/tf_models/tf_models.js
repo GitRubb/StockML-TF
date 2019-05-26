@@ -8,7 +8,7 @@ let optimizer = tf.train.adam();
 let loss = tf.losses.meanSquaredError;
 
 const models = {
-  lstm_v2: (input_size, output_size) => {
+  lstm: (input_shape, output_shape) => {
     // Config
     loss = tf.losses.meanSquaredError;
     optimizer = tf.train.adam();
@@ -16,7 +16,7 @@ const models = {
     model.add(
       tf.layers.lstm({
         units: 64,
-        inputShape: [5, 3],
+        inputShape: input_shape,
         activation: "tanh",
         returnSequences: true
       })
@@ -60,7 +60,7 @@ const models = {
 
     model.add(
       tf.layers.dense({
-        units: output_size,
+        units: output_shape,
         activation: "softmax"
       })
     );

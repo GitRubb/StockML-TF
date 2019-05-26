@@ -105,9 +105,9 @@ class Tensorflow {
             settings.out_shape
           );
           break;
-        case "lstm_v2":
+        case "lstm":
           this.create_train_tensor();
-          this.model = tf_model.lstm_v2(settings.in_shape, settings.out_shape);
+          this.model = tf_model.lstm(settings.in_shape, settings.out_shape);
           break;
         default:
           this.create_train_tensor();
