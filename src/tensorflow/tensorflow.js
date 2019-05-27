@@ -109,8 +109,8 @@ class Tensorflow {
       switch (settings.model) {
         case "rnn":
           this.model = tf_model.create_model_rnn(
-            settings.in_shape,
-            settings.out_shape
+            this.tensor_shapes.input,
+            this.tensor_shapes.output[0]
           );
           break;
         case "lstm":
@@ -121,8 +121,8 @@ class Tensorflow {
           break;
         default:
           this.model = tf_model.create_model_rnn(
-            settings.in_shape,
-            settings.out_shape
+            this.tensor_shapes.input,
+            this.tensor_shapes.output[0]
           );
           break;
       }
