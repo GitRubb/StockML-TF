@@ -119,6 +119,12 @@ class Tensorflow {
             this.tensor_shapes.output[0]
           );
           break;
+        case "lstm_hidden_cells":
+          this.model = tf_model.lstm_hidden_cells(
+            this.tensor_shapes.input,
+            this.tensor_shapes.output[0]
+          );
+          break;
         default:
           this.model = tf_model.create_model_rnn(
             this.tensor_shapes.input,

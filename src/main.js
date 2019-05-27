@@ -10,16 +10,16 @@ async function main() {
     let rawdata = await fs.readFileSync("trade_history_ao_mome_trix_lstm");
     let trade_signals = JSON.parse(rawdata);
 
-    let tensor_data = util.trade_singal_extractor(trade_signals);
+    let tensor_data = _.shuffle(util.trade_singal_extractor(trade_signals));
 
     console.log("Sample tensor: ", tensor_data[0]);
 
     await tensorflow.load_train_tensor(
-      _.slice(tensor_data, tensor_data.length - 2200, tensor_data.length - 200)
+      _.slice(tensor_data, 0, tensor_data.length - 200)
     );
 
     await tensorflow.train_modell({
-      model: "lstm",
+      model: "lstm_hidden_cells",
       name: "",
       loop: 1
     });

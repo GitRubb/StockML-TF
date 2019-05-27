@@ -35,7 +35,7 @@ const utils = {
 
         tensor_frame.profit = [(sell_price / trade.buy_price[0] - 1) * 100];
 
-        if (sell_price > buy_price) {
+        if (sell_price > buy_price * 1.01) {
           tensor_frame.output = [1, 0];
           tensor_good.push(tensor_frame);
         } else {
@@ -49,8 +49,6 @@ const utils = {
 
     // Make even dataset!
     let even_count = _.min([tensor_good.length, tensor_bad.length]);
-
-    //console.log(_.take(tensor_good, even_count));
 
     tensor_datas = _.take(tensor_good, even_count).concat(
       _.take(tensor_bad, even_count)

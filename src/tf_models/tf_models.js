@@ -8,6 +8,45 @@ let optimizer = tf.train.adam();
 let loss = tf.losses.meanSquaredError;
 
 const models = {
+  lstm_hidden_cells: (input_shape, output_shape) => {
+    // Config
+    loss = tf.losses.meanSquaredError;
+    optimizer = tf.train.adam();
+
+    model.add(
+      tf.layers.inputLayer({
+        inputShape: input_shape
+      })
+    );
+
+    const cells = [
+      tf.layers.lstmCell({ units: 64 }),
+      tf.layers.lstmCell({ units: 64 }),
+      tf.layers.lstmCell({ units: 64 })
+    ];
+
+    model.add(
+      tf.layers.rnn({
+        cell: cells,
+        returnSequences: false
+      })
+    );
+
+    model.add(
+      tf.layers.dense({
+        units: output_shape,
+        activation: "softmax"
+      })
+    );
+
+    model.compile({
+      optimizer,
+      loss
+    });
+
+    return model;
+  },
+
   lstm: (input_shape, output_shape) => {
     // Config
     loss = tf.losses.meanSquaredError;
