@@ -8,6 +8,7 @@ const tf_model = require("../tf_models/tf_models");
 class Tensorflow {
   constructor() {
     this.train = {};
+    this.tensor_shapes = {};
     this.input = [];
     this.output = [];
   }
@@ -29,18 +30,13 @@ class Tensorflow {
 
   create_train_tensor() {
     this.train.input = tf.tensor(this.input);
-
-    console.log("Input shape:", this.train.input.shape);
-
     this.train.output = tf.tensor(this.output);
 
+    console.log("Input shape:", this.train.input.shape);
     console.log("Output shape:", this.train.output.shape);
 
-    this.train.input_shape = this.train.input.shape;
-    this.train.output_shape = this.train.output.shape;
-
-    this.train.input_shape.shift();
-    this.train.output_shape.shift();
+    this.tensor_shapes.input = _.slice(this.train.input.shape, 1);
+    this.tensor_shapes.output = _.slice(this.train.output.shape, 1);
   }
 
   async get_predict(input) {
@@ -103,22 +99,27 @@ class Tensorflow {
         validationSteps: 2
       };
 
-      console.log("Shappes: ", this.train.input_shape, this.train.output_shape);
+      this.create_train_tensor();
+      console.log(
+        "Shappeee:",
+        this.tensor_shapes.input,
+        this.tensor_shapes.output
+      );
 
       switch (settings.model) {
         case "rnn":
-          this.create_train_tensor();
           this.model = tf_model.create_model_rnn(
             settings.in_shape,
             settings.out_shape
           );
           break;
         case "lstm":
-          this.create_train_tensor();
-          this.model = tf_model.lstm(settings.in_shape, settings.out_shape);
+          this.model = tf_model.lstm(
+            this.tensor_shapes.input,
+            this.tensor_shapes.output[0]
+          );
           break;
         default:
-          this.create_train_tensor();
           this.model = tf_model.create_model_rnn(
             settings.in_shape,
             settings.out_shape
