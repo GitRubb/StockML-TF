@@ -34,7 +34,13 @@ class Tensorflow {
 
     this.train.output = tf.tensor(this.output);
 
-    console.log("Output shape:", this.train.input.shape);
+    console.log("Output shape:", this.train.output.shape);
+
+    this.train.input_shape = this.train.input.shape;
+    this.train.output_shape = this.train.output.shape;
+
+    this.train.input_shape.shift();
+    this.train.output_shape.shift();
   }
 
   async get_predict(input) {
@@ -96,6 +102,8 @@ class Tensorflow {
         stepsPerEpoch: 2,
         validationSteps: 2
       };
+
+      console.log("Shappes: ", this.train.input_shape, this.train.output_shape);
 
       switch (settings.model) {
         case "rnn":
