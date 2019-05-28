@@ -36,10 +36,12 @@ const utils = {
 
         tensor_frame.profit = [(sell_price / trade.buy_price[0] - 1) * 100];
 
-        if (sell_price > buy_price * 1.005) {
+        if (sell_price >= buy_price * 1.01) {
           tensor_frame.output = [1, 0];
           tensor_good.push(tensor_frame);
-        } else {
+        }
+
+        if (sell_price <= buy_price * 0.99) {
           tensor_frame.output = [0, 1];
           tensor_bad.push(tensor_frame);
         }
@@ -66,13 +68,13 @@ const utils = {
     result.train = _.slice(
       result.train,
       0,
-      parseInt(result.train.length * 0.95)
+      parseInt(result.train.length * 0.99)
     );
 
     // Last 5% for test
     result.test = _.slice(
       result.train,
-      parseInt(result.train.length * 0.95),
+      parseInt(result.train.length * 0.99),
       result.train.length
     );
 

@@ -22,6 +22,8 @@ const models = {
     const cells = [
       tf.layers.lstmCell({ units: 128 }),
       tf.layers.lstmCell({ units: 128 }),
+      tf.layers.lstmCell({ units: 128 }),
+      tf.layers.lstmCell({ units: 128 }),
       tf.layers.lstmCell({ units: 128 })
     ];
 

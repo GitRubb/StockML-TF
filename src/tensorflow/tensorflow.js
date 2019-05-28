@@ -83,8 +83,7 @@ class Tensorflow {
       model: "rnn",
       name: "",
       loop: 5,
-      in_shape: 1,
-      out_shape: 1
+      epochs: 10
     }
   ) {
     try {
@@ -92,7 +91,7 @@ class Tensorflow {
       let config = {
         verbose: 1,
         shuffle: true,
-        epochs: 50,
+        epochs: settings.epochs,
         batchSize: 4096,
         validationSplit: 0.03,
         stepsPerEpoch: 2,
@@ -100,12 +99,6 @@ class Tensorflow {
       };
 
       this.create_train_tensor();
-      console.log(
-        "Shappeee:",
-        this.tensor_shapes.input,
-        this.tensor_shapes.output
-      );
-
       switch (settings.model) {
         case "rnn":
           this.model = tf_model.create_model_rnn(
@@ -153,6 +146,43 @@ class Tensorflow {
       return _.last(response.history.loss);
     } catch (e) {
       logger.error("Tensorflow train error ", e);
+    }
+  }
+
+  async re_train(
+    settings = {
+      loop: 5,
+      epochs: 10
+    }
+  ) {
+    try {
+      let config = {
+        verbose: 1,
+        shuffle: true,
+        epochs: settings.epochs,
+        batchSize: 4096,
+        validationSplit: 0.03,
+        stepsPerEpoch: 2,
+        validationSteps: 2
+      };
+
+      this.create_train_tensor();
+
+      let response = {};
+
+      // Where actual learning happen
+      for (let i = 0; i < settings.loop; i++) {
+        response = await this.model.fit(
+          this.train.input,
+          this.train.output,
+          config
+        );
+      }
+
+      // Return last loss this could verify if the train were success
+      return _.last(response.history.loss);
+    } catch (e) {
+      logger.error("Tensorflow re-train error ", e);
     }
   }
 }

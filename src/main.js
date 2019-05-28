@@ -12,17 +12,27 @@ async function main() {
 
     let tensor_data = util.trade_singal_extractor(trade_signals);
 
-    console.log("Sample tensor: ", tensor_data.train[0]);
+    console.log("Train sample data: ", tensor_data.train[0]);
 
     await tensorflow.load_train_tensor(tensor_data.train);
 
     await tensorflow.train_modell({
       model: "lstm_hidden_cells",
-      name: "lstm_test_1",
-      loop: 1
+      name: "",
+      loop: 1,
+      epochs: 20
     });
 
+    /* await tensorflow.re_train({
+      loop: 1,
+      epochs: 1
+    });*/
+
+    //await tensorflow.load_model("lstm_test_1");
+
     await tensorflow.test_model(tensor_data.test);
+
+    console.log("Test sample data: ", tensor_data.train[0]);
   } catch (e) {
     console.log(e);
   }
