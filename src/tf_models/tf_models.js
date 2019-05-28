@@ -10,8 +10,8 @@ let loss = tf.losses.meanSquaredError;
 const models = {
   lstm_hidden_cells: (input_shape, output_shape) => {
     // Config
-    loss = tf.losses.meanSquaredError;
-    optimizer = tf.train.adam();
+    loss = tf.losses.huberLoss;
+    optimizer = tf.train.adam(0.001, 0.00001);
 
     model.add(
       tf.layers.inputLayer({
@@ -20,11 +20,9 @@ const models = {
     );
 
     const cells = [
-      tf.layers.lstmCell({ units: 64 }),
-      tf.layers.lstmCell({ units: 64 }),
-      tf.layers.lstmCell({ units: 64 }),
-      tf.layers.lstmCell({ units: 64 }),
-      tf.layers.lstmCell({ units: 64 })
+      tf.layers.lstmCell({ units: 128 }),
+      tf.layers.lstmCell({ units: 128 }),
+      tf.layers.lstmCell({ units: 128 })
     ];
 
     model.add(
