@@ -7,10 +7,10 @@ const tensorflow = require("./tensorflow/tensorflow");
 
 async function main() {
   try {
-    let rawdata = await fs.readFileSync("trade_history_ao_mome_trix_lstm");
+    let rawdata = await fs.readFileSync("trade_history_ao_mome_trix");
     let trade_signals = JSON.parse(rawdata);
 
-    let tensor_data = util.trade_singal_extractor(trade_signals);
+    let tensor_data = util.trade_singal_extractor(trade_signals, 3);
 
     console.log("Train sample data: ", tensor_data.train[0]);
 
@@ -19,7 +19,7 @@ async function main() {
     await tensorflow.train_modell({
       model: "lstm_hidden_cells",
       name: "",
-      loop: 1,
+      loop: 3,
       epochs: 20
     });
 
@@ -27,8 +27,6 @@ async function main() {
       loop: 1,
       epochs: 1
     });*/
-
-    //await tensorflow.load_model("lstm_test_1");
 
     await tensorflow.test_model(tensor_data.test);
 
