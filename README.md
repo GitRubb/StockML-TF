@@ -7,9 +7,13 @@ Tensorflow JS implementation under NodeJS for server side applications
 ```
 
 # Available modells:
-- Rnn 
+- Rnn
 - LSTM
 - LSTM with Cells
+
+# What we are looking for:
+- Smma cross(SAwesome oscillator) indicated trades predict with classification method Good/Bad (An avarage good trade on the picture below)
+![example chart](https://raw.githubusercontent.com/Palabola/StockML-TF/master/readme/example.jpg)
 
 # Example data structure:
 - Useable for utils.js -> trade_singal_extractor()
